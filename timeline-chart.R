@@ -19,9 +19,7 @@ dat <- dat %>%
 
 df <- dat
 df$category <- as.factor(df$category)
-# df$category <- factor(df$category, levels = c("Administation & interprofessionelle Austausch", "Kontrollen",
-#                                               "Medizinaltechnische Verrichtungen", "Pflegemassnahmen",
-#                                               "Eintritte","Austritte","Transport","Unterstützung bei Interventionen"))
+# df$category <- factor(df$category, levels = c("")) # here you can set the order of appearance of the categories
 
 df$intervention_label <- ifelse(is.na(df$abbreviations), df$intervention, df$abbreviations)
 
@@ -47,8 +45,6 @@ df$max_cumulative_end <- NA
 df$min_cumulative_start <- NA
 df$min_cumulative_end <- NA
 
-# df[34,]
-# df <- df[-34,] ## Removing rows with missing duration
 
 all_categories_sdf <- list()
 for(category in unique(df$category)){
@@ -84,40 +80,12 @@ for(category in unique(df$category)){
   all_categories_sdf <- rbind(all_categories_sdf, sdf)
 }
 
-
-
-# df %>% group_by(scheduled_start, category)
-# 
-# df$average_cumulative_time_start <- NA
-# for(row in 1:nrow(df)){
-#   if(row == 1) df$aver
-# }
-
-
-# df$formatted_scheduled_start <- as.POSIXct(df$scheduled_start)
-# df$formatted_average_time_end <- df$formatted_scheduled_start + minutes(df$average_duration)
-# 
-# df$formatted_max_time_end <- ifelse(is.na(df$max_duration), df$formatted_average_time_end, df$formatted_scheduled_start + minutes(df$max_duration))
-# df$formatted_max_time_end <- as.POSIXct(df$formatted_max_time_end, origin = lubridate::origin)
-# 
-# 
-# df$formatted_average_cumulative_start <- as.POSIXct(df$formatted_average_cumulative_start)
-# df$formatted_average_cumulative_end <- df$formatted_average_cumulative_start + minutes(df$average_duration)
-# 
-# df$formatted_max_cumulative_end <- ifelse(is.na(df$max_duration), df$formatted_average_cumulative_end, df$formatted_average_cumulative_start + minutes(df$max_duration))
-# df$formatted_max_cumulative_end <- as.POSIXct(df$formatted_max_cumulative_end, origin = lubridate::origin)
-
-
+# Loading most distinct colours palette
 source("succession_of_N_most_distinct_colours.R")
-
-## Colouring by scheduled starting hour
-# colors <- get_colours(length(unique(df$scheduled_start)))
-# names(colors) = unique(df$scheduled_start)
-# df$colors = colors[as.character(df$scheduled_start)]
 
 df <- all_categories_sdf
 
-## Colouring by activity category
+# Colouring by activity category
 colors <- get_colours(length(unique(df$category)))
 names(colors) = unique(df$category)
 df$colors = colors[as.character(df$category)]
@@ -133,62 +101,7 @@ pdf_width <- 45
 df_anticipated <- df
 
 
-# plot1 <- gg_vistime(df, col.start = "formatted_scheduled_start", col.end = "formatted_average_time_end", ## Once fixed, change both to cumulative_time_start/end
-#                     col.event = "intervention_label",
-#                     col.color = "colors",
-#                     col.group = "category", # to define as type of intervention, either ICU, or student supervision, or other
-#                     title = "Time schedule of nursing activity in IMC",
-#                     optimize_y = T, show_labels = T) +
-#   theme_bw() +
-#   scale_x_datetime(breaks = seq(min(as.POSIXct(df$formatted_scheduled_start)),
-#                                 max(as.POSIXct(df$formatted_average_time_end))+1800, by=time_step_axis), date_labels ="%H:%M") 
-# 
-# ggsave2("average_time_nursing_activity_IMC_timeschedule.pdf", plot1,  device = "pdf", width = pdf_width, height = pdf_height)
-# 
-# 
-# plot2 <- gg_vistime(df, col.start = "formatted_scheduled_start", col.end = "formatted_max_time_end", ## Once fixed, change both to cumulative_time_start/end
-#                     col.event = "intervention_label",
-#                     col.color = "colors",
-#                     col.group = "category", # to define as type of intervention, either ICU, or student supervision, or other
-#                     title = "Time schedule of nursing activity in IMC",
-#                     optimize_y = T, show_labels = T) +
-#   theme_bw() +
-#   scale_x_datetime(breaks = seq(min(as.POSIXct(df$formatted_scheduled_start)),
-#                                 max(as.POSIXct(df$formatted_max_time_end))+1800, by=time_step_axis), date_labels ="%H:%M") 
-# 
-# ggsave2("max_time_nursing_activity_IMC_timeschedule.pdf", plot2,  device = "pdf", width = pdf_width, height = pdf_height)
-# 
-# 
-# 
-# 
-# df_anticipated$category <- as.factor(df_anticipated$category)
-# df_anticipated$category <- factor(df_anticipated$category, levels = c("Administation & interprofessionelle Austausch", "Kontrollen",
-#                                                                       "Medizinaltechnische Verrichtungen", "Pflegemassnahmen",
-#                                                                       "Eintritte","Austritte","Transport","Unterstützung bei Interventionen"))
-# 
-# df_anticipated$intervention_label <- ifelse(is.na(df_anticipated$abbreviations), df_anticipated$intervention, df_anticipated$abbreviations)
-# 
-# df_anticipated$average_duration <- df_anticipated$average_duration + 1
-# df_anticipated$max_duration <- df_anticipated$max_duration + 1
-# 
-# df_anticipated$formatted_scheduled_start <- as.POSIXct(df_anticipated$formatted_scheduled_start)
-# df_anticipated$formatted_average_time_end <- df_anticipated$formatted_scheduled_start + minutes(df_anticipated$average_duration)
-# 
-# df_anticipated$formatted_max_time_end <- ifelse(is.na(df_anticipated$max_duration), df_anticipated$formatted_average_time_end, df_anticipated$formatted_scheduled_start + minutes(df_anticipated$max_duration))
-# df_anticipated$formatted_max_time_end <- as.POSIXct(df_anticipated$formatted_max_time_end, origin = lubridate::origin)
-# 
-# 
-# df_anticipated$formatted_average_cumulative_start <- as.POSIXct(df_anticipated$formatted_average_cumulative_start)
-# df_anticipated$formatted_average_cumulative_end <- df_anticipated$formatted_average_cumulative_start + minutes(df_anticipated$average_duration)
-# 
-# df_anticipated$formatted_max_cumulative_end <- ifelse(is.na(df_anticipated$max_duration), df_anticipated$formatted_average_cumulative_end, df_anticipated$formatted_average_cumulative_start + minutes(df_anticipated$max_duration))
-# df_anticipated$formatted_max_cumulative_end <- as.POSIXct(df_anticipated$formatted_max_cumulative_end, origin = lubridate::origin)
-# 
-# colors <- get_colours(length(unique(df_anticipated$category)))
-# names(colors) = unique(df_anticipated$category)
-# df_anticipated$colors = colors[as.character(df_anticipated$category)]
-
-plot3 <- gg_vistime(df_anticipated, col.start = "average_cumulative_start", col.end = "average_cumulative_end", ## Once fixed, change both to cumulative_time_start/end
+plot_avg <- gg_vistime(df_anticipated, col.start = "average_cumulative_start", col.end = "average_cumulative_end", ## Once fixed, change both to cumulative_time_start/end
                     col.event = "intervention_label", linewidth = 6,
                     col.color = "colors",
                     col.group = "category", # to define as type of intervention, either ICU, or student supervision, or other
@@ -198,10 +111,10 @@ plot3 <- gg_vistime(df_anticipated, col.start = "average_cumulative_start", col.
   scale_x_datetime(breaks = seq(min(as.POSIXct(df_anticipated$average_cumulative_start)),
                                 max(as.POSIXct(df_anticipated$average_cumulative_end))+1800, by=time_step_axis), date_labels ="%H:%M")
 
-ggsave2("cumulative_average_time_activity_timeschedule.pdf", plot3,  device = "pdf", width = pdf_width, height = pdf_height)
+ggsave2("cumulative_average_time_activity_timeschedule.pdf", plot_avg,  device = "pdf", width = pdf_width, height = pdf_height)
 
 
-plot4 <- gg_vistime(df_anticipated, col.start = "max_cumulative_start", col.end = "max_cumulative_end", ## Once fixed, change both to cumulative_time_start/end
+plot_max <- gg_vistime(df_anticipated, col.start = "max_cumulative_start", col.end = "max_cumulative_end", ## Once fixed, change both to cumulative_time_start/end
                     col.event = "intervention_label", linewidth = 6,
                     col.color = "colors",
                     col.group = "category", # to define as type of intervention, either ICU, or student supervision, or other
@@ -211,4 +124,4 @@ plot4 <- gg_vistime(df_anticipated, col.start = "max_cumulative_start", col.end 
   scale_x_datetime(breaks = seq(min(as.POSIXct(df_anticipated$max_cumulative_start)),
                                 max(as.POSIXct(df_anticipated$max_cumulative_end))+1800, by=time_step_axis), date_labels ="%H:%M") 
 
-ggsave2("cumulative_max_time_activity_timeschedule.pdf", plot4,  device = "pdf", width = pdf_width, height = pdf_height)
+ggsave2("cumulative_max_time_activity_timeschedule.pdf", plot_max,  device = "pdf", width = pdf_width, height = pdf_height)
