@@ -1,12 +1,10 @@
-setwd("C:/Users/livio/Google Drive/insel/nursing activity/")
-
 library(readxl)
 library(tidyverse)
 library(lubridate)
 library(zoo)
 
 
-dat <- read_xlsx("UKN Zeitstrahl_20230908_FI_LR.xlsx")
+dat <- read_xlsx("datasheet_example.xlsx")
 
 # Populate missing values in Schduled start column
 dat$scheduled_start <- na.locf(dat$scheduled_start)
