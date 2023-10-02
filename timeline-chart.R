@@ -198,7 +198,7 @@ plot3 <- gg_vistime(df_anticipated, col.start = "average_cumulative_start", col.
   scale_x_datetime(breaks = seq(min(as.POSIXct(df_anticipated$average_cumulative_start)),
                                 max(as.POSIXct(df_anticipated$average_cumulative_end))+1800, by=time_step_axis), date_labels ="%H:%M")
 
-ggsave2("notfall_cumulative_average_time_nursing_activity_timeschedule.pdf", plot3,  device = "pdf", width = pdf_width, height = pdf_height)
+ggsave2("cumulative_average_time_activity_timeschedule.pdf", plot3,  device = "pdf", width = pdf_width, height = pdf_height)
 
 
 plot4 <- gg_vistime(df_anticipated, col.start = "max_cumulative_start", col.end = "max_cumulative_end", ## Once fixed, change both to cumulative_time_start/end
@@ -211,4 +211,4 @@ plot4 <- gg_vistime(df_anticipated, col.start = "max_cumulative_start", col.end 
   scale_x_datetime(breaks = seq(min(as.POSIXct(df_anticipated$max_cumulative_start)),
                                 max(as.POSIXct(df_anticipated$max_cumulative_end))+1800, by=time_step_axis), date_labels ="%H:%M") 
 
-ggsave2("notfall_cumulative_max_time_nursing_activity_timeschedule.pdf", plot4,  device = "pdf", width = pdf_width, height = pdf_height)
+ggsave2("cumulative_max_time_activity_timeschedule.pdf", plot4,  device = "pdf", width = pdf_width, height = pdf_height)
