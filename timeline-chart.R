@@ -6,12 +6,12 @@ library(zoo)
 
 dat <- read_xlsx("datasheet_example.xlsx")
 
-# Populate missing values in Schduled start column
+# Populate missing values in "scheduled_start" column
 dat$scheduled_start <- na.locf(dat$scheduled_start)
 # Format scheduled start
 dat$scheduled_start <- as.POSIXct(dat$scheduled_start, format="%Y-%M-%D %H:%M:%S", tz="CET")
 
-# Populate missing values in Abbreviations column based on values already associated with Intervention column but not filled throughout
+# Populate missing values in "abbreviations" column based on values already associated with the "intervention" column but not filled throughout
 dat <- dat %>% 
   group_by(intervention) %>% 
   fill(abbreviations, .direction = "down")
