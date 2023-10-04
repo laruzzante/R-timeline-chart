@@ -12,4 +12,5 @@ The input is an Excel datasheet with:
 An example Excel datasheet is provided. No need to completely fill in the "abbreviations" label as missing values will be filled with corresponding row's intervention field.
 
 Output (polished) example timeline chart:
-![Alt text]([https://assets.digitalocean.com/articles/alligator/boo.svg](https://github.com/laruzzante/R-timeline-chart/blob/main/example_timeline_chart.jpg)https://github.com/laruzzante/R-timeline-chart/blob/main/example_timeline_chart.jpg "Nursing activities in clinic")
+relative%20path/to/img.jpg?raw=true
+![Alt text](example_timeline_chart.jpg "Nursing activities in clinic")
