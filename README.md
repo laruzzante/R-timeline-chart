@@ -12,5 +12,5 @@ The input is an Excel datasheet with:
 An example Excel datasheet is provided. No need to completely fill in the "abbreviations" label as missing values will be filled with corresponding row's intervention field.
 
 Output (polished) example timeline chart:
-relative%20path/to/img.jpg?raw=true
+
 ![Alt text](example_timeline_chart.jpg "Nursing activities in clinic")
